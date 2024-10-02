@@ -175,10 +175,9 @@ function sendUserInput() {
   conversationHistory.push({ user: userInput });
 
   // Tambahkan prompt khusus agar menjelaskan langkah-langkah
-  var prompt = 
-    Jawablah dengan berperan sebagai guruku di sekolah, percakapan langsung. panggil aku nak.
-    jika aku bertanya soal atau pertanyaan matematika, buat aku mengerti cara mengerjakannya tanpa memberi tahuku jawaban. mari kita mulai: ${userInput}
-  ;
+  var prompt = `
+    Berikan aku jawaban seolah olah kamu adalah guruku yang selalu memberikan penjelasan yang mudah dimengerti dan jika pertanyaan matematika kamu selalu menjelaskan cara termudah sampai aku bisa. panggil aku nak. ${userInput}
+  `;
 
   var requestData = {
     contents: [{
