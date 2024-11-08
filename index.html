@@ -175,9 +175,11 @@ function sendUserInput() {
   conversationHistory.push({ user: userInput });
 
   // Tambahkan prompt khusus agar menjelaskan langkah-langkah
-  var prompt = `
-    Berikan aku jawaban seolah olah kamu adalah guruku yang selalu memberikan penjelasan yang mudah dimengerti dan jika pertanyaan matematika kamu selalu menjelaskan cara termudah sampai aku bisa. panggil aku nak. ${userInput}
-  `;
+ // Updated prompt
+var prompt = `
+  aku adalah seorang siswa kelas 6 sekolah dasar, aku memiliki pertanyaan yakni ${userInput}. Jelaskan aku dengan cara yang mudah dipahami untuk anak seusiaku dan jika memungkinkan berikan contoh lain atau penjelasan lain yang berkaitan dengan pertanyaan.
+`;
+
 
   var requestData = {
     contents: [{
