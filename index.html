@@ -167,19 +167,21 @@ function sendUserInput() {
     return;
   }
 
-  // Tampilkan modal loading
+  // Show the loading modal
   loadingModal.modal('show');
 
   userInputField.val('');
   appendMessage(userInput, true);
   conversationHistory.push({ user: userInput });
 
-  // Tambahkan prompt khusus agar menjelaskan langkah-langkah
- // Updated prompt
-var prompt = `
-  aku adalah seorang siswa kelas 6 sekolah dasar, aku memiliki pertanyaan yakni ${userInput}. Jelaskan aku dengan cara yang mudah dipahami untuk anak seusiaku dan jika memungkinkan berikan contoh lain atau penjelasan lain yang berkaitan dengan pertanyaan.
-`;
-
+  // Check if the input starts with "tolong"
+  var prompt;
+  if (userInput.toLowerCase().startsWith("tolong")) {
+    prompt = `
+      aku adalah seorang siswa kelas 6 sekolah dasar, ${userInput}. ajarkan aku seolah olah kamu adalah guruku`;
+  } else {
+    prompt = userInput;
+  }
 
   var requestData = {
     contents: [{
@@ -195,12 +197,12 @@ var prompt = `
     contentType: 'application/json',
     data: JSON.stringify(requestData),
     success: function(response) {
-      // Sembunyikan modal loading setelah mendapatkan respons
+      // Hide the loading modal after receiving a response
       loadingModal.modal('hide');
 
       if (response && response.candidates && response.candidates.length > 0 && response.candidates[0].content && response.candidates[0].content.parts && response.candidates[0].content.parts.length > 0) {
         var botResponse = response.candidates[0].content.parts[0].text.replace(/\*\*/g, '<br><br>');
-        
+
         appendMessage(botResponse, false);
         conversationHistory.push({ bot: botResponse });
       } else {
@@ -209,7 +211,7 @@ var prompt = `
       }
     },
     error: function(xhr, status, error) {
-      // Sembunyikan modal loading jika ada kesalahan
+      // Hide the loading modal if there's an error
       loadingModal.modal('hide');
       console.error('Error:', error);
       appendMessage('Terjadi kesalahan saat berkomunikasi dengan server.', false);
